@@ -11,13 +11,10 @@
     --rootsize: 20px;
     --maxwidth: 1200px;
 }
-
-/* Setter padding og margin for hele dokumentet til 0 */
 body, html {
     margin: 0;
     padding: 0;
 }
-
 body {
     font-family: 'Rubik', sans-serif;
     background-color: var(--yellow);
@@ -27,7 +24,6 @@ body {
 p {
     font-size: 1rem;
 }
-
 h1 {
     margin: 0;
     padding: 0;
@@ -45,26 +41,22 @@ h1 {
         }
     }
 }
-
 h2 {
     font-size: 2.5rem;
     font-weight: 900;
 }
-
 h3 {
     font-size: 1.5rem;
     font-weight: 600;
 }
 
 /* HOVEDOMRÅDE */
-
 #container {
     width: 100%;
     max-width: var(--maxwidth);
     background-color: var(--white);
     margin: 0 auto;
     position: relative;
-
 }
 
 header {
@@ -96,7 +88,7 @@ header {
 }
 
 nav {
-    background-color: var(--red);
+    background: var(--red);
     color: var(--white);
 
     a {
@@ -105,6 +97,7 @@ nav {
         text-transform: uppercase;
         color: var(--white);
         text-decoration: none;
+        
 
         &:hover {
             background: var(--yellow);
@@ -115,7 +108,7 @@ nav {
 }
 
 main {
-    #product-list{
+    #product-list {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-evenly;
@@ -148,16 +141,16 @@ main {
             margin: 0;
             text-transform: uppercase;
         }
-
+        
         p {
             margin: 0;
             margin-bottom: 5px;
         }
 
         button {
-            background-color: var(--green);
+            background: var(--green);
             color: var(--white);
-            font-family: "Rubik" sans-serif;
+            font-family: "Rubik", sans-serif;
             font-size: 1rem;
             padding: 0.5rem 1rem;
         }
@@ -171,13 +164,13 @@ main {
 /* HANDLEVOGN */
 #cart {
     width: 550px;
-    background-color: var(--black);
+    background: var(--black);
     color: var(--white);
     border-left: 0.5rem solid var(--green);
     border-bottom: 0.5rem solid var(--green);
     padding: 1rem;
     position: absolute;
-    top: 75px;
+    top: 74px;
     right: 0;
 
     &.hidden {

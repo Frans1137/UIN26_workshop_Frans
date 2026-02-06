@@ -75,7 +75,7 @@ return (
       <InputVare />
       <AntallVare />
       <LeggTilVare />
-    </div>
+  </div>
 
   )
 }
