@@ -1,13 +1,22 @@
 import './style/lego.css'
 import { products } from './assets/legodudes'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 function App() {
 
   const [isOpen, setIsOpen] = useState(false)
+  const [cart, setCart] = useState([])
+  const [cartQuantity, setCartQuantity] = useState(0)
+
+  console.log("Cart", cart)
+
+  useEffect(() => {
+    const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0)
+    setCartQuantity(totalQuantity)
+  }, [cart]) 
 
 
-  function Header({setIsOpen}){
+  function Header({setIsOpen, cartQuantity}){
     return(
       <header>
         <h1>
@@ -16,7 +25,7 @@ function App() {
           </a>
           </h1>
           <button id="cart-button" onClick={()=> setIsOpen((prev) => !prev)}>
-            <div id="cart-quantity">0</div>
+            <div id="cart-quantity">{cartQuantity}</div>
             <img src="website_images/legocart.svg" alt="Handlevogn" />
           </button>
       </header>
@@ -39,16 +48,23 @@ function App() {
     return (<h2>Ninjago</h2>)
   }
 
-  function Products({products}){
+  function Products({products, setCart}){
     return (
     <div id="product-list">
-      {products.map(p => <ProductCard key={p.prodid} p={p} />)}
+      {products.map(p => <ProductCard key={p.prodid} p={p} setCart={setCart} />)}
       
     </div>)
   }
 
-  function ProductCard({p}){
+  function ProductCard({p, setCart}){
+
     const handleClick = ()=>{
+      setCart((prev) => 
+        prev.some(item => item.prodid === p.prodid) ? //sjekker om et element eksisterer. Hvis ja: 
+        prev.map(item =>  item.prodid === p.prodid ? 
+        {...item, quantity: item.quantity +1} // + 1. : Hvis nei legge til
+        : item) : 
+        [...prev, {...p, quantity : 1}]) //Peker på tidligere array (prev) + legger til nytt element (p)
       console.log("Legg i handlekurv")
     }
 
@@ -63,14 +79,16 @@ function App() {
     )
   }
 
-  function Cart({isOpen}){
+  function Cart({isOpen, cart, setCart}){
     return (
       <section id="cart" className={isOpen ? "" : "hidden"}>
             <table id="cart-items">
               <tbody>
-                  <tr>
+                {cart.length < 0 ? 
+                  (<tr>
                     <td>Ingen varer i handlevognen enda.</td>
-                  </tr>
+                  </tr>) : (cart.map(p => <CartItem key={p.prodid} p={p} setCart={setCart} />))
+                  }
               </tbody>
             </table>
             <p>Total pris: <span id="total-price">0</span>NOK</p>
@@ -78,13 +96,21 @@ function App() {
     )
   }
   
-  function CartItem(){
+  function CartItem({p, setCart}){
+
+    const removeFromCart = (prodid)=>{
+      setCart(prev => prev.map(item => item.prodid === prodid ? {...item, quantity: item.quantity - 1}: item)
+      .filter(item => item.quantity > 0)
+    )
+
+    }
+
     return (
       <tr>
-        <td className="title">${product.title}</td>
-        <td className="price">${product.price}</td>
-        <td className="quantity">${ci.quantity}</td>
-        <td className="delete"><button onClick="deleteFromCart(${product.prodid})">X</button></td>
+        <td className="title">{p.title}</td>
+        <td className="price">{p.price}</td>
+        <td className="quantity">{p.quantity}</td>
+        <td className="delete"><button onClick={()=> removeFromCart(p.prodid)}>X</button></td>
       </tr>
     )
   }  
@@ -93,14 +119,14 @@ function App() {
   return (
     <div id="container">
 
-      <Header setIsOpen={setIsOpen} />
+      <Header setIsOpen={setIsOpen} cartQuantity={cartQuantity}/>
       <Nav />
       <main>
         <CategoryTitle />
-        <Products products={products} />
+        <Products products={products} setCart={setCart} />
       </main>
-      <Cart isOpen={isOpen} />
-
+      <Cart isOpen={isOpen} cart={cart} setCart={setCart} />
+            {/* ta imot={sendt med} */}
     </div>
   )
 }
