@@ -1,83 +1,69 @@
-// import { useState } from 'react'
-import './App.css'
-import './style/style.css'
+import { useState } from 'react'
+import AddForm from './components/AddForm'
+import ShoppingList from './components/ShoppingList'
+
+
 
 function App() {
-
-
-  function Main(){
-    return(
-      <main>
-        <h1>Handleliste</h1>
-      </main>
-    )
-  }
-
-  function InputVare(){
-    return(
-      <form className='input' >
-        <label>
-          <input type="text" placeholder='Egg..'/>
-        </label>
-      </form>
-    )
-  }
-
-  
-  function AntallVare(){
-
-          function IncreaseValue() {
-      const input = document.getElementById('numberInputPlus');
-      input.stepUp(); 
-    }
-
-      function DecreaseValue() {
-      const input = document.getElementById('numberInputMinus');
-      input.stepDown(); 
-    }
-
     
-    // function Counter() {
-    //   const [count, setCount] = useState(0);
-  
-    //   const HandleIncrease = () => {
-    //     setCount(count + 1);
-    //   };
-  
-    //   const HandleDecrease = () => {
-    //     setCount(count + 1);
-    //   };
+    const [items, setItems] = useState([
+        {
+            id: 1,
+            name: 'Melk',
+            quantity: 1,
+            checked: true
+        }
+    ])
 
-  return(
-
-    <form className='input' >
-      <button id='numberInputPlus' onClick={IncreaseValue}>+</button>
-        <input type="number" id="quantity" name="quantity" min="1" max="10" step="1" value="1" />
-      <button id='numberInputMinus' onClick={DecreaseValue}>-</button>
-    </form>
-  )
-}
-
-  function LeggTilVare(){
-    const HandleClick = ()=> {
-      console.log("Lagt til")
+    const addItem = (name, quantity) => {
+        setItems(prev => [...prev, 
+            {
+                id: Date.now(),
+                name,
+                quantity,
+                checked: false
+            }
+        ])
     }
-    return(
-      <button onClick={HandleClick}>Legg til</button>
+
+    const updateQuantity = (id, delta) => {
+        setItems(prev =>
+            prev.map(item =>
+                item.id === id
+                ? { ...item, quantity: Math.max(1, item.quantity + delta)}
+                : item
+            )
+        )
+    }
+
+    const toggleChecked = (id) => {
+        setItems(prev =>
+            prev.map(item =>
+                item.id === id
+                ? { ...item, checked: !item.checked}
+                : item
+            )
+        )
+    }
+
+    const removeItem = (id) => {
+        setItems(prev => prev.filter(item => item.id !== id))
+    }
+
+    return (
+        <main className='container'>
+            <h1>Handleliste</h1>
+
+            <AddForm onAdd={addItem} />
+            
+            <ShoppingList
+                items={items}
+                onToggle={toggleChecked}
+                onUpdateQuantity={updateQuantity}
+                onRemove={removeItem} 
+                />
+        </main>
     )
-  }
-
-
-return (
-  
-  <div className='container'>
-      <Main />
-      <InputVare />
-      <AntallVare />
-      <LeggTilVare />
-  </div>
-
-  )
 }
 
 export default App

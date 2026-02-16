@@ -26,10 +26,6 @@ function App() {
   const [todoList, setTodoList] = useState(todoItems)
   const [todo, setTodo] = useState()
 
-
-
-
-
   
   return (
     <main>
