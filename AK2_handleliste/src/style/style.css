@@ -118,21 +118,6 @@ button:hover {
     font-weight: 500;
 }
 
-.actions {
-    display: flex;
-    gap: 0.5rem;
-    padding-top: 0.3rem;
-}
-
-.actions button {
-    background-color: #e0e0e0;
-    color: #000000;
-    font-size: 18px;
-    padding: 0.2rem;
-    margin-left: 0.15rem;
-    border-radius: 4px;
-}
-
 .empty{
     display: flex;
     justify-content: center;
