@@ -17,8 +17,9 @@ function App() {
       <Routes> {/* 6  */}
         <Route index element={<Home />} />              {/* 7 Elementer fra egne filer som vises i HTML */}
         <Route path='categories' element={<CategoryLayout />}>  {/* Route tag holdes åpen for å neste route til nye elementer */}
-          <Route index element={<Categories />} />
-          <Route path=':slug' element={<Category />} />  {/* : brukes som en dynamisk slug/spor. Valgfritt slug-ord */}
+          <Route index element={<h1>Kategorier</h1>} />
+          <Route path=':slug' element={<Categories/>} />
+          <Route path=':slug/:cat' element={<Category />} />  {/* : brukes som en dynamisk slug/spor. Valgfritt slug-ord */}
         </Route>                                        {/* Route-nesting avsluttes her */}
         <Route path='about' element={<About />}/>
       </Routes>

@@ -1,3 +1,6 @@
+// Jeg sliter litt med å forstå logikken i react og har fått mye hjelp av ChatGPT under denne oppgaven
+// komplett ChatGPT chatlogg: https://chatgpt.com/share/69976c25-e8b0-800c-bf00-9d530e69a5f3
+
 function ShoppingItem({ item, onToggle, onSetQuantity, onRemove }) {
   // Jeg ordna en funksjon for å slette varer fra handleliste. For å unngå å legge til en ekstra slett-knapp 
   // valgte jeg å gi valg om å slette varen dersom man trykker minus når varen har antall 1. 
