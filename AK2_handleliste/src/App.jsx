@@ -1,36 +1,30 @@
 import { useState } from 'react'
 import AddForm from './components/AddForm'
 import ShoppingList from './components/ShoppingList'
-
-
+import './style/style.css'
 
 function App() {
     
     const [items, setItems] = useState([
-        {
-            id: 1,
-            name: 'Melk',
-            quantity: 1,
-            checked: true
-        }
+        {id: 1, name: 'Melk', quantity: 1, checked: true},
+        {id: 2, name: 'Brød', quantity: 1, checked: false}
     ])
 
     const addItem = (name, quantity) => {
-        setItems(prev => [...prev, 
-            {
-                id: Date.now(),
-                name,
-                quantity,
-                checked: false
-            }
+        setItems(prev => [{
+            id: Date.now(), 
+            name, 
+            quantity, 
+            checked: false},
+            ...prev
         ])
     }
 
-    const updateQuantity = (id, delta) => {
+    const setQuantity = (id, newQuantity) => {
         setItems(prev =>
-            prev.map(item =>
+                prev.map(item =>
                 item.id === id
-                ? { ...item, quantity: Math.max(1, item.quantity + delta)}
+                ? { ...item, quantity: Math.max(1, newQuantity)}
                 : item
             )
         )
@@ -47,21 +41,28 @@ function App() {
     }
 
     const removeItem = (id) => {
-        setItems(prev => prev.filter(item => item.id !== id))
+        setItems(prev => prev.filter(item => 
+            item.id !== id))
     }
 
     return (
         <main className='container'>
-            <h1>Handleliste</h1>
+            <header>
+                <h1>Handleliste</h1>
+            </header>
 
+            <section>
             <AddForm onAdd={addItem} />
+            </section>
             
+            <section>
             <ShoppingList
                 items={items}
                 onToggle={toggleChecked}
-                onUpdateQuantity={updateQuantity}
+                onSetQuantity={setQuantity}
                 onRemove={removeItem} 
                 />
+            </section>
         </main>
     )
 }
