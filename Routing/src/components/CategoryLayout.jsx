@@ -31,7 +31,7 @@ export default function CategoryLayout(){
             <Link key={item+'random-tekst'} to={item} onClick={()=>setApiEndpoint(defaultApiUrl + item)}>{item}</Link>)}      {/* Henter nøkler/data fra et object. Spørsmålstegn for await/hvis api finnes */}
             {/* {apiData?.map((item) => <Link key={item.name + '-xt'} to={item.name} onClick={()=> setApiEndpoint(item.url)} >{item.name}</Link>)} */}
         </nav>
-        <Outlet context={{apiEndpoint, defaultApiUrl}} />
+        <Outlet context={{apiEndpoint, defaultApiUrl, setApiEndpoint}} />
         </>             // tom container avsluttes
     )
 }

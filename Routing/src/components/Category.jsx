@@ -5,6 +5,7 @@ export default function Category(){
     const {apiEndpoint, defaultApiUrl} = useOutletContext()
 
     const [apiData, setApiData] = useState([])
+    const [spritesImg, setSpritesImg] = useState([])
     const {slug} = useParams()
 
     console.log("Denne kommer fra Category", apiEndpoint)
@@ -15,11 +16,16 @@ export default function Category(){
         setApiData(data)
     }
     
-    console.log(apiData)
+    console.log("Cat", apiData, apiEndpoint)
+
+    console.log("Key values:")
 
     useEffect(()=>{
         getSingleData()
-    },[slug])
+        setSpritesImg(Object.keys(apiData?.sprites))
+    },[slug, apiEndpoint])
+
+    console.log("Bilder", spritesImg)
 
     return (
         <main>
